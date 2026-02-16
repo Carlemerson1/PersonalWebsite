@@ -1,0 +1,60 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Carl Emerson{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="nav-logo">Carl Emerson</a>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="{{ url_for('home') }}" class="nav-link {% if request.endpoint == 'home' %}active{% endif %}">Home</a></li>
+                <li><a href="{{ url_for('portfolio') }}" class="nav-link {% if request.endpoint == 'portfolio' %}active{% endif %}">Portfolio</a></li>
+                <li><a href="{{ url_for('tutoring') }}" class="nav-link {% if request.endpoint == 'tutoring' %}active{% endif %}">Tutoring</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-contact">
+                <h3>Get In Touch</h3>
+                <div class="contact-links">
+                    <a href="mailto:emersonmathtutoring@gmail.com" class="contact-link">
+                        <span class="contact-icon">✉</span>
+                        clemerso@ncsu.edu
+                    </a>
+                    <a href="https://www.instagram.com/emersontutors" target="_blank" class="contact-link">
+                        <span class="contact-icon">IG</span>
+                        @emersontutors
+                    </a>
+                    <a href="https://www.linkedin.com/in/carlemerson/" target="_blank" class="contact-link">
+                        <span class="contact-icon">Linkedin</span>
+                        carlemerson
+                    </a>
+                </div>
+            </div>
+            <p class="footer-copyright">&copy; 2025 Emerson Math Tutoring. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

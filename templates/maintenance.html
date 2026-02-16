@@ -1,0 +1,42 @@
+<!-- templates/maintenance.html -->
+{% extends "base.html" %}
+
+{% block title %}Carl Emerson - Maintenance{% endblock %}
+
+{% block content %}
+<div class="maintenance-container">
+    <div class="maintenance-content">
+        <h1>Under Construction</h1>
+        <p>This page is currently being updated with new content. Check back soon!</p>
+        <a href="{{ url_for('home') }}" class="btn btn-primary">Return Home</a>
+    </div>
+</div>
+
+<style>
+.maintenance-container {
+    min-height: calc(100vh - 140px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-light);
+}
+
+.maintenance-content {
+    text-align: center;
+    max-width: 600px;
+    padding: 3rem;
+}
+
+.maintenance-content h1 {
+    font-size: 2.5rem;
+    color: var(--navy);
+    margin-bottom: 1rem;
+}
+
+.maintenance-content p {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+}
+</style>
+{% endblock %}
