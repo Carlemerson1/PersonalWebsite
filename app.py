@@ -9,7 +9,7 @@ def home():
 
 @app.route('/portfolio')
 def portfolio():
-    return render_template('maintenance.html')
+    return render_template('portfolio.html')
 
 @app.route('/tutoring')
 def tutoring():
