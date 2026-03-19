@@ -21,11 +21,163 @@
         margin: 0;
     }
 
+    /* ── Dashboard section ────────────────────────────────────────── */
+    .dashboard-section {
+        padding: 3rem 0 0;
+        background: var(--white);
+    }
+
+    .dashboard-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .dashboard-section h2 {
+        font-size: 2rem;
+        color: var(--navy);
+        margin-bottom: 0.5rem;
+    }
+
+    .dashboard-intro {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.7;
+    }
+
+    .dashboard-wrapper {
+        border: 1px solid #E0E8F0;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
     .dashboard-wrapper iframe {
         width: 100%;
-        height: calc(100vh - 70px);
+        height: 850px;
         border: none;
         display: block;
+    }
+
+    /* ── Validation section ───────────────────────────────────────── */
+    .validation-section {
+        background: var(--bg-light);
+        padding: 4rem 0;
+    }
+
+    .validation-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .validation-section h2 {
+        font-size: 2rem;
+        color: var(--navy);
+        margin-bottom: 0.5rem;
+    }
+
+    .validation-intro {
+        color: var(--text-light);
+        font-size: 0.95rem;
+        max-width: 750px;
+        margin-bottom: 3rem;
+        line-height: 1.7;
+    }
+
+    .chart-block {
+        background: var(--white);
+        border: 1px solid #E0E8F0;
+        border-radius: 6px;
+        padding: 1.75rem 2rem 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .chart-block h3 {
+        font-size: 1.05rem;
+        color: var(--navy);
+        margin-bottom: 0.4rem;
+    }
+
+    .chart-caption {
+        font-size: 0.875rem;
+        color: var(--text-light);
+        line-height: 1.65;
+        margin-bottom: 1.25rem;
+        max-width: 100%;
+    }
+
+    .chart-block img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 4px;
+    }
+
+    .two-chart-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    @media (max-width: 900px) {
+        .two-chart-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .dashboard-wrapper iframe {
+            height: 600px;
+        }
+    }
+
+    .tooltip {
+        position: relative;
+        border-bottom: 1px dotted var(--navy);
+        cursor: help;
+        color: inherit;
+    }
+
+    .tooltip:hover::after {
+        content: attr(data-tip);
+        position: absolute;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--navy-dark);
+        color: white;
+        padding: 0.35rem 0.65rem;
+        border-radius: 4px;
+        font-size: 0.78rem;
+        white-space: nowrap;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .tooltip:hover::before {
+        content: '';
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 5px solid transparent;
+        border-top-color: var(--navy-dark);
+        z-index: 10;
+    }
+
+    .regime-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 4px;
+        position: sticky;
+        top: 90px;   /* sticks just below the nav as you scroll the text */
+    }
+
+    @media (max-width: 900px) {
+        .regime-image img {
+            position: static;
+        }
     }
 </style>
 {% endblock %}
@@ -34,15 +186,159 @@
 <div class="portfolio-header">
     <div class="container">
         <h1>Quantitative Trading System</h1>
-        <p>Empirical Bayes hierarchical model — live paper trading via Alpaca Markets</p>
+        <p>My Bayesian approach to algorithmic trading. This is a market-long strategy
+        that leverages probabilistic models and regime detection to optimize trading
+        decisions. Below, you can find a live dashboard showcasing performance metrics
+        and insights. Additionally, you can find detailed model validation results.</p>
     </div>
 </div>
 
-<div class="dashboard-wrapper">
-    <iframe
-        src="https://carlemerson1-ebayestrader-dashboardvisualizer-jnxjly.streamlit.app?embed=true"
-        title="Trading Dashboard"
-        loading="lazy">
-    </iframe>
+<!-- ── Live dashboard ─────────────────────────────────────────────────────── -->
+<div class="dashboard-section">
+    <div class="container">
+        <h2>Live Dashboard</h2>
+        <p class="dashboard-intro">
+            Paper trading via Alpaca Markets. Signals, positions, and equity curve
+            update daily.
+        </p>
+        <div class="dashboard-wrapper">
+            <iframe
+                src="https://carlemerson1-ebayestrader-dashboardvisualizer-jnxjly.streamlit.app?embed=true"
+                title="Trading Dashboard"
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+</div>
+
+<!-- ── Validation section ─────────────────────────────────────────────────── -->
+<div class="validation-section">
+    <div class="container">
+
+        <h2>Model Validation</h2>
+        <p class="validation-intro">
+            All performance figures are subjected to rigorous statistical testing before
+            drawing conclusions. The results below use two complementary permutation
+            frameworks: a block bootstrap test on strategy returns (preserving
+            autocorrelation structure) and a walk-forward label-shuffling test on the
+            ML regime detector. Both confirm genuine predictive signal beyond what
+            random chance would produce.
+        </p>
+
+<!-- Row 1: equity fan + multi-metric side by side -->
+        <div class="two-chart-grid">
+
+            <div class="chart-block">
+                <h3>Strategy Validation Overview</h3>
+                <p class="chart-caption">
+                    The strategy uses a 70-day rolling lookback window specifically designed to capture multi-month
+                    equity momentum, a well-documented market anomaly. The block bootstrap null preserves temporal
+                    autocorrelation within 20-day blocks but destroys the multi-month momentum signal that the
+                    strategy exploits. The actual strategy significantly outperforms this null (p=0.026, n=2,500),
+                    confirming the 70-day window is capturing genuine predictive signal rather than overfitting noise.
+                    Critically, raw momentum alone is insufficient to explain the system's performance. Without regime-based
+                    position scaling, the market-long strategy is fully exposed during bear markets. The regime detector
+                    I designed (below) addresses this directly.
+                </p>
+                <img src="{{ url_for('static', filename='images/validation/permtest_equity_fan.svg') }}"
+                     alt="Block bootstrap equity curve fan">
+            </div>
+
+            <div class="chart-block">
+                <h3>Validation Metrics</h3>
+                <p class="chart-caption">
+                    <span class="tooltip" data-tip="(Annualized return minus risk-free rate) divided by annualized volatility">Sharpe ratio</span>,
+                    <span class="tooltip" data-tip="(Annualized return minus risk-free rate) divided by maximum drawdown">Calmar ratio</span>,
+                    and total return of the actual strategy shown against the full null distribution
+                    of 2,500 block-shuffled runs. The actual strategy sits in the right tail across
+                    all three metrics. Sharpe and Calmar rank in the top 2–3% of the null — the
+                    risk-adjusted metrics are where the strategy most clearly separates itself, which
+                    is expected given that the regime detector's primary function is drawdown
+                    reduction rather than return maximization. Total return ranks at the 92nd
+                    percentile, reflecting that some null runs achieve higher raw returns by chance
+                    through favorable block orderings, but without the risk controls that produce
+                    the superior risk-adjusted profile.
+                </p>
+                <img src="{{ url_for('static', filename='images/validation/permtest_multi_metric.svg') }}"
+                     alt="Block bootstrap multi-metric panel">
+            </div>
+
+        </div>
+
+        <!-- Row 2: regime detector — full width, text left / image right -->
+        <!-- Row 2: regime detector — full width, overview + image + essay -->
+        <div class="chart-block">
+            <h3>Regime Detector Validation</h3>
+
+            <!-- Brief overview above the graph -->
+            <p class="chart-caption">
+                The ML regime detector is a Gradient Boosting classifier that predicts
+                one of three market states — bull, bear, or neutral — and scales position
+                sizes accordingly. It is trained and validated using
+                a strict walk-forward protocol across 7 out-of-sample years (2020–2026),
+                never seeing future data during training. The permutation test below
+                confirms the regime features carry genuine predictive signal entirely
+                beyond what random chance would produce.
+            </p>
+
+            <!-- Graph — full width -->
+            <img src="{{ url_for('static', filename='images/validation/regime_perm_histogram.svg') }}"
+                 alt="Regime detector permutation test histogram"
+                 style="margin-bottom: 1.75rem;">
+
+            <!-- Full essay below -->
+            <p class="chart-caption">
+                The detector uses five robust features: the
+                <span class="tooltip" data-tip="50-day moving average">MA50</span>/<span class="tooltip" data-tip="200-day moving average">MA200</span>
+                crossover ratio, price distance from
+                <span class="tooltip" data-tip="200-day moving average">MA200</span>,
+                3-month momentum, short vs long-term volatility ratio, and market breadth
+                (fraction of universe stocks &gt; MA50). These features were selected
+                because they are well-established in the academic literature as predictive
+                of market regimes and are robust to overfitting given the limited training
+                history available (~7 years).
+            </p>
+            <p class="chart-caption">
+                Validation uses a strict walk-forward protocol: the model is trained on a
+                rolling 3-year window and evaluated on the following out-of-sample year,
+                repeated across 2020–2026 to produce 7 independent test folds. The model
+                has been validated against lookahead bias. The permutation test shuffles
+                the regime labels within each calendar year across 200 runs, building a
+                null distribution of walk-forward accuracy under the hypothesis that the
+                features contain no real predictive information. The observed accuracy of
+                86.5% sits 7.74 standard deviations above the null mean, entirely off the
+                right tail of the distribution (p&lt;0.0001).
+            </p>
+            <p class="chart-caption">
+                Two design choices specifically address the asymmetric cost structure of a
+                long-only strategy. First, bear samples are upweighted by a factor of 3×
+                during training via asymmetric sample weights, reflecting the fact that
+                failing to reduce exposure during a bear market is much more costly than
+                missing out on upside during a bull market, or being overly cautious during
+                a neutral one. Second, a confidence threshold prevents low-conviction bull
+                predictions from triggering full exposure, instead defaulting to the neutral
+                scale factor. Bear predictions are not subject to this threshold since the
+                cost of a false negative is much higher than a false positive. The practical
+                result is strong bear detection — the asymmetrically important case — while
+                avoiding the chronic over-prediction of bull regimes in flat markets that
+                plagued earlier model iterations.
+            </p>
+            <p class="chart-caption" style="margin-bottom: 0;">
+                A methodological note: the regime labels are derived from the same MA and
+                momentum inputs used as features, introducing some circularity. The model
+                is partly learning to reproduce its own labeling function rather than
+                predicting a fully independent ground truth, which inflates the absolute
+                accuracy figure somewhat. The more meaningful validation is therefore
+                economic: does applying the regime scalar actually improve the strategy's
+                <span class="tooltip" data-tip="(Annualized return minus risk-free rate) divided by annualized volatility">Sharpe ratio</span>
+                and reduce maximum drawdown in out-of-sample backtests? The answer is yes,
+                and the equity curve above reflects that improvement. The permutation test
+                result should be interpreted as confirmation that the regime features are
+                internally consistent and non-degenerate, rather than a claim of 86.5%
+                predictive power in isolation from the broader strategy.
+            </p>
+        </div>
+
+    </div>
 </div>
 {% endblock %}
