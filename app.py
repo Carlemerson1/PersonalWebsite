@@ -21,7 +21,7 @@ if __name__ == '__main__':
 
 
 # **File structure:**
-# /your-project
+# /PersonalWebsite
 #   /static
 #     /css
 #       main.css
